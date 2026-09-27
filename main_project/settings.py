@@ -149,4 +149,7 @@ CLOUDINARY_STORAGE ={
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # WhiteNoise optimizes and serves static files for me 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Prevent WhiteNoise from throwing 500 errors if a file is missing
+WHITENOISE_MANIFEST_STRICT = False
