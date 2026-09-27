@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: todo-portfolio
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn main_project.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.1
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

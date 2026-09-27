@@ -13,6 +13,9 @@ urlpatterns = [
 ]
 
 # Serves media files during local development
+# If you don't include this line in your URLs configuration,
+# your browser won't be able to display any images uploaded
+# through your Django admin panel or user forms during local testing.
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     #The Dynamic Addition > urlpatters +=
