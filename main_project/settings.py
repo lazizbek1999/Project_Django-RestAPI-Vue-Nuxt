@@ -149,8 +149,14 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-# i forced Django to use Cloudinary instead of the local server media folder
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 # WhiteNoise optimizes and serves static files for me 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
