@@ -20,8 +20,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # Automatically switches: True on your computer, False on RenderSecure production configuration by setting dynamic DEBUG mode"
 # SECURITY WARNING: don't run with debug turned on in production!
 # Security: Don't show detailed debug screens in production
-DEBUG = 'RENDER' not in os.environ
-
+# DEBUG = 'RENDER' not in os.environ
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
