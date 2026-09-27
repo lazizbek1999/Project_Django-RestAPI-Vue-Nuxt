@@ -1,0 +1,17 @@
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold " href="{% url 'task_list' %}">TaskPortfolio</a>
+        <div class="d-flex align-items-center">
+        {% if request.user.is_authenticated %}
+            <span class="navbar-text text-white me-3">Welcome <strong>{{request.user.username}}</strong></span>
+            <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger" style="margin-left:10px;">Log Out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light me-2">Sing in</a>
+            <a href="{% url 'register' %}" class="btn btn-sm btn-success">Sign up</a>
+        {% endif %}    
+        </div>
+    </div>
+</nav>

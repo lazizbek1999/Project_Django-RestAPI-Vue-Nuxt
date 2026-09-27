@@ -1,0 +1,118 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Left Column: Add Task Form Card -->
+    <div class="col-md-4 mb-4">
+        {% if request.user.is_authenticated %}
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">Adding new task</h5>
+            </div>
+            <div class="card-body">
+
+                <!--  Crucial. Added enctype attribute for image files -->
+                <!-- enctype stands for Encoding Type.
+                  It tells the browser how to encode and 
+                  package the form data before shipping it over the web 
+                  to Django.multipart/form-data tells the browser:
+                   "Stop! This form contains heavy files.
+                    Break the submission into multiple distinct parts: 
+                    send the input text in one package, 
+                 and send the raw binary chunks of the image file in another package." -->
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- Style fields inside paragraph tags neatly -->
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-light border px-4 fw-bold border w-100 fw-bold">Submit the
+                        task</button>
+                </form>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Public Guest Alert Banner -->
+        <div class="card bg-dark text-white border-0 shadow-sm p-4 text-center">
+            <h5>Do you want to control your tasks?</h5>
+            <p class="small text-muted">Sign up or login to start creating
+                your own task lists
+            </p>
+            <div class="d-grid gap-2">
+                <a href="{% url 'login' %}" class="btn btn-success btn-smfw-bold">Sign in</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <hr>
+
+
+    <!-- Right Column: Public Task Feed -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="card-title mb-0 text-secondary fw-bold">Tasks</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for task in tasks %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+
+                            <span
+                                class="fw-semibold {% if task.is_completed %}text-decoration-line-through text-muted{% endif %}">
+                                {{ task.title }}
+                            </span>
+                            <!-- Show task creator to the public -->
+                            <small class="text-muted d-block mt-1">Created by:
+                                <span class="badge bg-secondary-subtle text-secondary">
+                                    {{task.user.username}}
+                                </span>
+                            </small>
+                            {% if task.description %}
+                            <small class="text-muted d-block mt-1">{{ task.description }}</small>
+                            {% endif %}
+
+                            {% if task.image %}
+                            <div class="mt-2">
+                                <img src="{{task.image.url}}" alt="task.title"
+                                    class="img-fluid rounded border shadow-sm"
+                                    style="max-height: 150px; object-fit: cover;">
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!-- Badges and Form Action Links -->
+                        <div class="d-flex align-items-center gap-2">
+                            {% if task.is_completed %}
+                            <span class="badge bg-success-subtle text-dark rounded-pill">Task completed!</span>
+                            {% else %}
+                            <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Pending!</span>
+                            {% endif %}
+
+                            <!-- Crucial for me: down the code only shows if user is logged in! -->
+                            {% if request.user.is_authenticated and task.user == request.user %}
+                            <a href="{% url 'task_update' task.id %}"
+                                class="btn btn-sm btn-outline-secondary py-1">Edit</a>
+                            <a href="{% url 'task_delete' task.id %}"
+                                class="btn btn-sm btn-outline-danger py-1">Delete</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-center py-5 text-muted">
+                        <p class="mb-0">Task was not found!</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
