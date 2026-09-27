@@ -42,12 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # before static files
     'cloudinary_storage',
     'django.contrib.staticfiles',
-    # i added for the core library!
     'cloudinary',
-    # app name down here
     'my_app',
 ]
 
