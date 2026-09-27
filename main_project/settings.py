@@ -142,12 +142,14 @@ MAILERS = {
 
 LOGOUT_REDIRECT_URL = 'login'
 
-CLOUDINARY_STORAGE ={
+# Cloudinary Storage Configuration
+CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
+# i forced Django to use Cloudinary instead of the local server media folder
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # WhiteNoise optimizes and serves static files for me 
