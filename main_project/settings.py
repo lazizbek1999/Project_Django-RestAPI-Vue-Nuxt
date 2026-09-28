@@ -48,9 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'my_app',
+    'corsheaders',
+    'rest_framework',
+    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,6 +64,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # Local Nuxt development port
+    "https://onrender.com" # Production domain
+]
 
 ROOT_URLCONF = 'main_project.urls'
 
